@@ -4,8 +4,8 @@ import os
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from .models import Bill
 from unittest.mock import patch
+from billing.models import Bill
 
 class BillUploadTests(APITestCase):
     @patch('billing.services.send_email_service.EmailService.send_email')

@@ -1,26 +1,40 @@
-# docker-compose.yml
-
 version: '3'
 
 services:
-  # db:
-  #   image: postgres:13
-  #   environment:
-  #     POSTGRES_DB: billing_db
-  #     POSTGRES_USER: billing_user
-  #     POSTGRES_PASSWORD: billing_pass
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data
-
+  db:
+    container_name: postgres_container_billing
+    image: postgres
+    environment:
+      POSTGRES_USER: billing_user
+      POSTGRES_PASSWORD: billing_pass
+      POSTGRES_DB: billing_db
+    networks:
+      - backend_network
+    ports:
+      - "5432:5432"
   web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    build:
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - db
+    command: >
+      sh -c " python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
       - "8000:8000"
-    # depends_on:
-    #   - db
+    environment:
+      - DATABASE_HOST=192.168.0.112
+      - DATABASE_NAME=billing_db
+      - DATABASE_PORT=5432
+      - DATABASE_USER=billing_user
+      - DATABASE_PASSWORD=billing_pass
 
-    # volumes:
-    #   postgres_data:
+volumes:
+  postgres_data:
+
+
+networks:
+  backend_network:
+    driver: bridge

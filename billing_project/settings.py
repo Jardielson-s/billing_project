@@ -75,10 +75,20 @@ WSGI_APPLICATION = 'billing_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+DATABASE_HOST = os.getenv('DATABASE_HOST')
+DATABASE_NAME = os.getenv('DATABASE_NAME')
+DATABASE_PORT = os.getenv('DATABASE_PORT')
+DATABASE_USER = os.getenv('DATABASE_USER')
+DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DATABASE_NAME,
+        'HOST': DATABASE_HOST,
+        'PORT': DATABASE_PORT,
+        'USER': DATABASE_USER,
+        'PASSWORD': DATABASE_PASSWORD
     }
 }
 

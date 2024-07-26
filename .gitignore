@@ -3,3 +3,5 @@ billing/migrations/__pycache__
 billing/services/__pycache__
 billing_project/__pycache__
 billing.log
+billing/**/tests/__pycache__
+.env
