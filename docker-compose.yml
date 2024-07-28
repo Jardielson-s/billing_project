@@ -25,11 +25,13 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_HOST=192.168.0.112
+      - DATABASE_HOST=db
       - DATABASE_NAME=billing_db
       - DATABASE_PORT=5432
       - DATABASE_USER=billing_user
       - DATABASE_PASSWORD=billing_pass
+    networks:
+      - backend_network
 
 volumes:
   postgres_data:
